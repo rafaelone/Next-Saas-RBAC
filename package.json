@@ -5,12 +5,9 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "docker": "docker compose -f docker-compose.yml -up -d"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "prettier": "^3.2.5",
     "turbo": "latest"
   },
   "engines": {
@@ -19,6 +16,10 @@
   "packageManager": "npm@9.6.7",
   "workspaces": [
     "apps/*",
-    "packages/*"
-  ]
+    "packages/*",
+    "config/*"
+  ],
+  "dependencies": {
+    "@fastify/jwt": "^8.0.1"
+  }
 }

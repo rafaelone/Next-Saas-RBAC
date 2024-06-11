@@ -1,81 +1,128 @@
-# Turborepo starter
+Saas = Software as a Service
 
-This is an official starter Turborepo.
+Single Tenant vs Multi Tenant
 
-## Using this example
+Single = um software é utilizado para UMA empresa (delphi/java) PDV - cópias ZIP - TeamViewer - instalação manual
 
-Run the following command:
+Infraestrutura única para cliente
 
-```sh
-npx create-turbo@latest
-```
+/-------------------------------------------------/
 
-## What's inside?
+multi = um software que é usado por mais uma empresa com a mesma infraestrutura
 
-This Turborepo includes the following packages/apps:
+multi tenant NAO QUER DIZER multi subdominios
 
-### Apps and Packages
+empresa1.app.com
+empresa2.app.com
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+multi tenant NÃO QUER DIZER um banco por empresa
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+A GRANDE MAIORIA dos Saas que são Multi Tenant não usam um banco por empresa
 
-### Utilities
+1. Público(governo)
+2. LGDP / Contrato individual (Itaú)
 
-This Turborepo has some additional tools already setup for you:
+Estategia de subdominios: Páginas publicas
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+/-------------------------------------------------/
 
-### Build
+Autorização
 
-To build all apps and packages, run the following command:
+RBAC - Role Based Authorization Control
+Role: admin, billing, developer, member
 
-```
-cd my-turborepo
-pnpm build
-```
+ABAC - Attribute Based Authorization Control
+admin pode editar um projeto
+membro pode editar o título de um projeto
 
-### Develop
+/-------------------------------------------------/
 
-To develop all apps and packages, run the following command:
+Biblioteca para autorização
 
-```
-cd my-turborepo
-pnpm dev
-```
+CASL - Isomorphic Authorization Javascript library
 
-### Remote Caching
+user action -> descreve a permissão (CRUD ou outros verbos)
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+subject - entidades da aplicação
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+fields - campos das entidades aos queis eu quero poder add um tipo de permissão condicional
 
-```
-cd my-turborepo
-npx turbo login
-```
+conditions - usuario só pode editar um projeto se foi ele q criou o projeto,
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+# Next.js Saas + RBAC
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+this project contains all the necessary boilerplate to setup a multi-tenant Saas with Next.js including authentication and RBAC authorization
 
-```
-npx turbo link
-```
+# Features
 
-## Useful Links
+### Authentication
 
-Learn more about the power of Turborepo:
+- [x] It should be able to authenticate using e-mail & password;
+- [x] It should be able to authentica using Github account;
+- [x] It should be able to recover password using e-mail;
+- [x] It should be able to create an account (e-mail, name and password);
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+### Organization
+
+- [x] It should be able to create a new organization;
+- [] It should be able to get organization to which the user belongs;
+- [] It should be able to update an organization;
+- [] It should be able to shutdown an organization;
+- [] It should be able to transfer organization ownership;
+
+### Invites
+
+- [] It should be able to invite a new member (e-mail, role);
+- [] It should be able to accept an invite;
+- [] It should be able to revoke a pending invite;
+
+### Members
+
+- [] It should be able to get organization members;
+- [] It should be able to update a member role;
+
+### Projects
+
+- [] It should be able to get projects within a organization;
+- [] It should de able to create a new project (name, url, description);
+- [] It should be able to update a project (name, url, description);
+- [] It should be able to delete a project;
+
+### Belling
+
+- [] It should be able to get a billing for organization ($20 per project / $10 per member excluding billing role);
+
+### Roles
+
+- Aministrator
+- Member
+- Billing
+
+### Permissions table
+
+|                        | Administrator | Member | Billing | Anonumous |
+| ---------------------- | ------------- | ------ | ------- | --------- |
+| Update organization    | ✅            | ❌     | ❌      | ❌        |
+| Delete organization    | ✅            | ❌     | ❌      | ❌        |
+| Invite a member        | ✅            | ❌     | ❌      | ❌        |
+| Revoke an invite       | ✅            | ❌     | ❌      | ❌        |
+| List member            | ✅            | ✅     | ✅      | ❌        |
+| Transfer ownership     | ⚠            | ❌     | ❌      | ❌        |
+| Update member role     | ✅            | ❌     | ❌      | ❌        |
+| Delete member          | ✅            | ⚠     | ❌      | ❌        |
+| List projects          | ✅            | ✅     | ✅      | ❌        |
+| Create a new Project   | ✅            | ✅     | ❌      | ❌        |
+| Update a project       | ✅            | ⚠     | ❌      | ❌        |
+| Delete a project       | ✅            | ⚠     | ❌      | ❌        |
+| Get billing details    | ✅            | ❌     | ✅      | ❌        |
+| Export billing details | ✅            | ❌     | ✅      | ❌        |
+
+> ✅ = allowed
+> ❌ = not allowed
+> ⚠ = allowed w/ conditions
+
+commands prisma
+
+npx prisma init
+npx prisma migrate dev
+npx prisma studio
