@@ -58,7 +58,7 @@ model Account {
 enum Role {
   ADMIN
   MEMBER
-  BILLING
+  BILING
 }
 
 model Invite {

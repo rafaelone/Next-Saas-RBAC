@@ -173,8 +173,8 @@ async function seed() {
 
   await prisma.organization.create({
     data: {
-      name: 'Acme Inc (Billing)',
-      slug: 'acme-billing',
+      name: 'Acme Inc (Biling)',
+      slug: 'acme-biling',
       avatarUrl: faker.image.avatarGitHub(),
       ownerId: user.id,
       projects: {
@@ -221,7 +221,7 @@ async function seed() {
           data: [
             {
               userId: user.id,
-              role: 'BILLING',
+              role: 'BILING',
             },
             {
               userId: anotherUser.id,
