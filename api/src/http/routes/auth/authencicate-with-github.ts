@@ -98,8 +98,8 @@ export async function authenticateWithGithub(app: FastifyInstance) {
 
       const account = await prisma.account.findUnique({
         where: {
-          prodiver_userId: {
-            prodiver: 'GITHUB',
+          provider_userId: {
+            provider: 'GITHUB',
             userId: user.id,
           },
         },
@@ -108,7 +108,7 @@ export async function authenticateWithGithub(app: FastifyInstance) {
       if (!account) {
         await prisma.account.create({
           data: {
-            prodiver: 'GITHUB',
+            provider: 'GITHUB',
             providerAccountId: githubId,
             userId: user.id,
           },

@@ -60,7 +60,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
             where: {
               organizationId: organization.id,
               role: {
-                not: 'BILING',
+                not: 'BILLING',
               },
             },
           }),
