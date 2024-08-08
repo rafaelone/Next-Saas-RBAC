@@ -1,0 +1,28 @@
+{
+  "include": [
+    "src/**/*",
+    "@types/*.d.ts",
+    "prisma",
+    "src/packages"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "es2023",
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "node16",
+    "target": "es2022",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node16",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  }
+}
