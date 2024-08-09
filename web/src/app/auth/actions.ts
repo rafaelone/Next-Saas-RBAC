@@ -2,13 +2,15 @@
 
 import { redirect } from 'next/navigation'
 
+import { env } from '@/packages/envs'
+
 export async function signInWithGithub() {
   const githubSignInURL = new URL('login/oauth/authorize', 'https://github.com')
 
-  githubSignInURL.searchParams.append('client_id', 'Ov23liVISkjIkjSHIV2K')
+  githubSignInURL.searchParams.append('client_id', env.GITHUB_OUATH_CLIENT_ID)
   githubSignInURL.searchParams.append(
     'redirect_uri',
-    'http://localhost:3000/api/auth/callback',
+    env.GITHUB_OUATH_CLIENT_REDIRECT_URI,
   )
   githubSignInURL.searchParams.append('scope', 'user')
 
