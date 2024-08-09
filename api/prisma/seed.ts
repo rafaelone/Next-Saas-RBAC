@@ -5,17 +5,20 @@ import { hash } from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function seed() {
+  await prisma.organization.deleteMany()
   await prisma.user.deleteMany()
-  await prisma.user.deleteMany()
+
   const passwordHash = await hash('123456', 1)
+
   const user = await prisma.user.create({
     data: {
       name: 'John Doe',
       email: 'john@acme.com',
-      avatarUrl: 'https://github.com/rafaelone.png',
+      avatarUrl: 'https://github.com/diego3g.png',
       passwordHash,
     },
   })
+
   const anotherUser = await prisma.user.create({
     data: {
       name: faker.person.fullName(),
@@ -24,6 +27,7 @@ async function seed() {
       passwordHash,
     },
   })
+
   const anotherUser2 = await prisma.user.create({
     data: {
       name: faker.person.fullName(),
@@ -32,6 +36,7 @@ async function seed() {
       passwordHash,
     },
   })
+
   await prisma.organization.create({
     data: {
       name: 'Acme Inc (Admin)',
@@ -99,6 +104,7 @@ async function seed() {
       },
     },
   })
+
   await prisma.organization.create({
     data: {
       name: 'Acme Inc (Billing)',
@@ -164,6 +170,7 @@ async function seed() {
       },
     },
   })
+
   await prisma.organization.create({
     data: {
       name: 'Acme Inc (Member)',

@@ -3,10 +3,9 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
-
-import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function getProjects(app: FastifyInstance) {
   app
@@ -16,10 +15,9 @@ export async function getProjects(app: FastifyInstance) {
       '/organizations/:slug/projects',
       {
         schema: {
-          tags: ['projects'],
+          tags: ['Projects'],
           summary: 'Get all organization projects',
           security: [{ bearerAuth: [] }],
-
           params: z.object({
             slug: z.string(),
           }),
@@ -56,7 +54,7 @@ export async function getProjects(app: FastifyInstance) {
 
         if (cannot('get', 'Project')) {
           throw new UnauthorizedError(
-            'You`re not allowed to organization projects.',
+            `You're not allowed to see organization projects.`,
           )
         }
 
@@ -74,6 +72,7 @@ export async function getProjects(app: FastifyInstance) {
               select: {
                 id: true,
                 name: true,
+                email: true,
                 avatarUrl: true,
               },
             },
