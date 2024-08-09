@@ -96,7 +96,7 @@ export function ProjectSwitcher() {
         <DropdownMenuItem asChild>
           <Link href={`/org/${orgSlug}/create-project`} prefetch>
             <PlusCircle className="mr-2 size-4" />
-            Create Organization
+            Create Project
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
