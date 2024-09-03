@@ -49,7 +49,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
 
         const { cannot } = getUserPermissions(userId, membership.role)
 
-        if (cannot('get', 'Biling')) {
+        if (cannot('get', 'Billing')) {
           throw new UnauthorizedError(
             'You`re not allowed to get billing details form this organization',
           )
