@@ -8,7 +8,7 @@ import { getCurrentOrg } from '@/auth/auth'
 import { createOrganization } from '@/http/create-organization'
 import { updateOrganization } from '@/http/update-organization'
 
-const organizationSchema = z
+export const organizationSchema = z
   .object({
     name: z.string().min(4, {
       message: 'Organization name must be at least 4 characters long.',
